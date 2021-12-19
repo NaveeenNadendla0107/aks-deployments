@@ -1,9 +1,9 @@
 on: [push]
 env:
-  CLUSTER_NAME: actions
-  CLUSTER_RESOURCE_GROUP: actions
+  CLUSTER_NAME: mongo1
+  CLUSTER_RESOURCE_GROUP: mongo-aks
   NAMESPACE: default
-  REPO: babuactions
+  REPO: sreeuday
   
 jobs:
   build:
