@@ -3,7 +3,7 @@ env:
   CLUSTER_NAME: Blackbird-aks
   CLUSTER_RESOURCE_GROUP: Naveen
   NAMESPACE: default
-  REPO: Blackbirddev
+  REPO: blackbird01
   
 jobs:
   build:
