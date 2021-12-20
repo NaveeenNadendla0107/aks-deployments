@@ -15,10 +15,10 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    # Install helm
+    # Install build
     - name: build
       run: |
-        az acr build --image sampleapp:latest --registry ${{ env.REPO }} --file Dockerfile .
+        az acr build --image testapp:latest --registry ${{ env.REPO }} --file Dockerfile .
 
     # Install helm
     - name: Install Helm
@@ -34,6 +34,6 @@ jobs:
           --resource-group $CLUSTER_RESOURCE_GROUP \
           --name $CLUSTER_NAME \
           --overwrite-existing
-        helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/sampleapp --set image.tag=latest --wait
+        helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/testapp --set image.tag=latest --wait
         kubectl get services -o wide
         
