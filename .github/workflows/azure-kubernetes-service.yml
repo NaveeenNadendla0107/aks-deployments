@@ -1,9 +1,9 @@
 on: [push]
 env:
   CLUSTER_NAME: Blackbird-aks
-  CLUSTER_RESOURCE_GROUP: Naveen
+  CLUSTER_RESOURCE_GROUP: Test
   NAMESPACE: default
-  REPO: blackbird01
+  REPO: blackbirdaks
   
 jobs:
   build:
