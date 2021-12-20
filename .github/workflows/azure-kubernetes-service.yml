@@ -2,7 +2,7 @@ on: [push]
 env:
   CLUSTER_NAME: mongo1
   CLUSTER_RESOURCE_GROUP: mongo-aks
-  NAMESPACE: default-1
+  NAMESPACE: default
   REPO: mongoacr
   
 jobs:
