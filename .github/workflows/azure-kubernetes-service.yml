@@ -1,9 +1,9 @@
 on: [push]
 env:
-  CLUSTER_NAME: mongo1
-  CLUSTER_RESOURCE_GROUP: mongo-aks
+  CLUSTER_NAME: blackbird-aks
+  CLUSTER_RESOURCE_GROUP: Naveen
   NAMESPACE: default
-  REPO: mongoacr
+  REPO: Blackbirddev
   
 jobs:
   build:
