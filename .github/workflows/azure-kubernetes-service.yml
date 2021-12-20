@@ -1,9 +1,9 @@
 on: [push]
 env:
-  CLUSTER_NAME: mongo1
-  CLUSTER_RESOURCE_GROUP: mongo-aks
+  CLUSTER_NAME: blackbird1
+  CLUSTER_RESOURCE_GROUP: blackbird97
   NAMESPACE: default
-  REPO: mongoacr
+  REPO: blackbird97
   
 jobs:
   build:
