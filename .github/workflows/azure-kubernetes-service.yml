@@ -1,6 +1,6 @@
 on: [push]
 env:
-  CLUSTER_NAME: Blackbird-aks
+  CLUSTER_NAME: blackbird1
   CLUSTER_RESOURCE_GROUP: Test
   NAMESPACE: default
   REPO: blackbirdaks
