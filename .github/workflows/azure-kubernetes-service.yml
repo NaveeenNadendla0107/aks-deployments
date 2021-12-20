@@ -2,7 +2,7 @@ on: [push]
 env:
   CLUSTER_NAME: blackbird1
   CLUSTER_RESOURCE_GROUP: Test
-  NAMESPACE: default
+  NAMESPACE: default-1
   REPO: blackbirdaks
   
 jobs:
