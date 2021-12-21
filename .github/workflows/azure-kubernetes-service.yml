@@ -1,4 +1,4 @@
-on: [push]
+on: workflow_dispatch
 env:
   CLUSTER_NAME: blackbird1
   CLUSTER_RESOURCE_GROUP: Test
