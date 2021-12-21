@@ -37,9 +37,7 @@ jobs:
             username: ${{ secrets.REGISTRY_USERNAME }}
             password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-         #az acr build --image app:latest --registry ${{ env.REPO }} --file Dockerfile .
-         #docker build . -t ${{ env.REPO }}/${{ github.event.inputs.image }}:${{ github.sha }
-         #docker push ${{ env.REPO }}/${{ github.event.inputs.image }}:${{ github.sha }}
+
          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
 
@@ -59,4 +57,9 @@ jobs:
          # --overwrite-existing
         #helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/app --set image.tag=latest --wait
         #kubectl get services -o wide
+        
+        
+                 #az acr build --image app:latest --registry ${{ env.REPO }} --file Dockerfile .
+         #docker build . -t ${{ env.REPO }}/${{ github.event.inputs.image }}:${{ github.sha }
+         #docker push ${{ env.REPO }}/${{ github.event.inputs.image }}:${{ github.sha }}
         
