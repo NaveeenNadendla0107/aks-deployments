@@ -7,9 +7,6 @@ on:
       required: true
       default: 'first'
    
-
-
-
 env:
   CLUSTER_NAME: blackbird1
   CLUSTER_RESOURCE_GROUP: Test
@@ -35,7 +32,7 @@ jobs:
          #docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
          #docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
 
-    # Install helm
+    # Install hel
    # - name: Install Helm
     #  run: |
      #   curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
