@@ -24,17 +24,24 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     # Install build
-    - name: build
+    #- name: build
+      #uses: azure/docker-login@v1
+      #with: 
+       #creds: ${{ secrets.AZURE_CREDENTIALS }}
+       #REPO: ${{ env.REPO }}
+    #- run: |
+    - name: 'Build and push image'
       uses: azure/docker-login@v1
-      with: 
-       creds: ${{ secrets.AZURE_CREDENTIALS }}
-       REPO: ${{ env.REPO }}
+      with:
+            login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+            username: ${{ secrets.REGISTRY_USERNAME }}
+            password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
          #az acr build --image app:latest --registry ${{ env.REPO }} --file Dockerfile .
-         docker build . -t ${{ env.REPO }}/${{ github.event.inputs.image }}:${{ github.sha }
-         docker push ${{ env.REPO }}/${{ github.event.inputs.image }}:${{ github.sha }}
-         #docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
-         #docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
+         #docker build . -t ${{ env.REPO }}/${{ github.event.inputs.image }}:${{ github.sha }
+         #docker push ${{ env.REPO }}/${{ github.event.inputs.image }}:${{ github.sha }}
+         docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
+         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
 
     # Install hel
    # - name: Install Helm
