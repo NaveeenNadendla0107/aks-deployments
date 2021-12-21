@@ -1,4 +1,15 @@
-on: workflow_dispatch
+name: Aks deploy
+on: 
+  workflow_dispatch:
+   inputs:
+     imagename:
+      description: 'imagename'
+      required: true
+      default: 'Test'
+   
+
+
+
 env:
   CLUSTER_NAME: blackbird1
   CLUSTER_RESOURCE_GROUP: Test
