@@ -29,10 +29,10 @@ jobs:
       with: 
        creds: ${{ secrets.AZURE_CREDENTIALS }}
        REPO: ${{ env.REPO }}
-       run: |
-        #az acr build --image app:latest --registry ${{ env.REPO }} --file Dockerfile .
-        docker build . -t ${{ env.REPO }}/${{ github.event.inputs.image }}:${{ github.sha }
-        docker push ${{ env.REPO }}/${{ github.event.inputs.image }}:${{ github.sha }}
+    - run: |
+         #az acr build --image app:latest --registry ${{ env.REPO }} --file Dockerfile .
+         docker build . -t ${{ env.REPO }}/${{ github.event.inputs.image }}:${{ github.sha }
+         docker push ${{ env.REPO }}/${{ github.event.inputs.image }}:${{ github.sha }}
          #docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
          #docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
 
