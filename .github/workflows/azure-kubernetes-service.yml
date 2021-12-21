@@ -31,7 +31,7 @@ jobs:
       run: |
         az acr build --image app:latest --registry ${{ env.REPO }} --file Dockerfile .
 
-    # Install helm
+    # Install hel
    # - name: Install Helm
     #  run: |
      #   curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
