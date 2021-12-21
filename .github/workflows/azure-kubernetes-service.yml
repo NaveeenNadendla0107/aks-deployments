@@ -25,7 +25,10 @@ jobs:
 
     # Install build
     - name: build
-      run: |
+      with: 
+       creds: ${{ secrets.AZURE_CREDENTIALS }}
+       REPO: ${{ env.REPO }}
+       run: |
         #az acr build --image app:latest --registry ${{ env.REPO }} --file Dockerfile .
         docker build . -t ${{ env.REPO }}/${{ github.event.inputs.image }}:${{ github.sha }
         docker push ${{ env.REPO }}/${{ github.event.inputs.image }}:${{ github.sha }}
