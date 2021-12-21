@@ -25,6 +25,7 @@ jobs:
 
     # Install build
     - name: build
+      uses: azure/docker-login@v1
       with: 
        creds: ${{ secrets.AZURE_CREDENTIALS }}
        REPO: ${{ env.REPO }}
