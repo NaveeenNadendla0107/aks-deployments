@@ -6,26 +6,7 @@ on:
       description: 'image'
       required: true
       default: 'first'
-     Registryserver:
-      description: 'Registry server login'
-      required: true
-      default: 'blackbirdaks.azurecr.io'
-     clusterResourcegroup:
-      description: 'Cluster Resource Group Name'
-      required: true
-      default: 'Test'
-     clusterName:
-      description: 'Cluster Name'
-      required: true
-      default: 'blackbird1'
-     Namespace:
-      description: 'Namespace Name'
-      required: true
-      default: 'default'
-     Repository:
-      description: 'Repository Name'
-      required: true
-      default: 'blackbirdaks'
+    
    
 #env:
  # CLUSTER_NAME: ${{ github.event.inputs.CLUSTER_NAME }}
@@ -53,8 +34,8 @@ jobs:
        username: ${{ secrets.REGISTRY_USERNAME }}
        password: ${{ secrets.REGISTRY_PASSWORD }}
        run: | 
-         docker build . -t ${{ github.event.inputs.Registryserver }}/${{ github.event.inputs.image }}:${{ github.sha }}
-         docker push ${{ github.event.inputs.Registryserver }}/${{ github.event.inputs.image }}:${{ github.sha }}
+         docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
+         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
         
 
 
