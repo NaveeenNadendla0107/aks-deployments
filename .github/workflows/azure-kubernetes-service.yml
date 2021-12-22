@@ -50,7 +50,7 @@ jobs:
        #creds: ${{ secrets.AZURE_CREDENTIALS }}
        #REPO: ${{ env.REPO }}
     #- run: |
-    - name: 'Build and push image'
+    #- name: 'Build and push image'
      # uses: azure/docker-login@v1
      # with:
            # login-server: ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}
