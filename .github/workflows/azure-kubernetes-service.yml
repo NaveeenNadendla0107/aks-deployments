@@ -44,18 +44,14 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     # Install build
-    #- name: build
-      #uses: azure/docker-login@v1
-      #with: 
-       #creds: ${{ secrets.AZURE_CREDENTIALS }}
-       #REPO: ${{ env.REPO }}
-    #- run: |
-    #- name: 'Build and push image'
-     # uses: azure/docker-login@v1
-     # with:
-           # login-server: ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}
-           # username: ${{ secrets.REGISTRY_USERNAME }}
-           # password: ${{ secrets.REGISTRY_PASSWORD }}
+    - name: build
+      uses: azure/docker-login@v1
+      with: 
+       creds: ${{ secrets.AZURE_CREDENTIALS }}
+       REPO: ${{ env.REPO }
+       login-server: ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}
+       sername: ${{ secrets.REGISTRY_USERNAME }}
+       password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
          docker build . -t ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
          docker push ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
