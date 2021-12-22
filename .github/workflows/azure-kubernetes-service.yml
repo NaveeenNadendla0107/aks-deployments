@@ -1,15 +1,7 @@
 name: Aks deploy
 on: 
  workflow_dispatch:
-   inputs:
-     image:
-      description: 'image'
-      required: true
-      default: 'first'
-     repository:
-      description: 'Repository Name'
-      required: true
-      default: 'Blackbirddev'
+   
     
    
 #env:
@@ -30,14 +22,14 @@ jobs:
     # Connect to Azure Container registry (ACR)
     - uses: azure/docker-login@v1
       with:
-        login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }} 
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
     # Container build and push to a Azure Container registry (ACR)
     - run: |
-        docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
-        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
+        docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}.azurecr.io/mydeploy:${{ github.sha }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}.azurecr.io/mydeploy:${{ github.sha }}
 
      #'Install hellm'
     #- name: Install Helm
