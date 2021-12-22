@@ -65,7 +65,7 @@ jobs:
         
     - name: deploy
       uses: Azure/k8s-deploy@v1
-      env:
+      with:
        CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}
        CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
        run: |
