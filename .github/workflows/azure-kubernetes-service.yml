@@ -22,10 +22,10 @@ on:
      
    
 env:
-  cluster Name: ${{ github.event.inputs.ClusterName }}
+  clusterName: ${{ github.event.inputs.ClusterName }}
   ClusterResourceGroup: ${{ github.event.inputs.ClusterResourceGroup }}
   #NAMESPACE: ${{ github.event.inputs.NAMESPACE }}
-  Repository Name: ${{ github.event.inputs.repository}}
+  RepositoryName: ${{ github.event.inputs.repository}}
   #REGISTRY_LOGIN_SERVER: ${{ github.event.inputs.REGISTRY_LOGIN_SERVER}}
   image: ${{ github.event.inputs.image}}
   creds: ${{ secrets.AZURE_CREDENTIALS }}
