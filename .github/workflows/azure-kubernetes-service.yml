@@ -53,14 +53,18 @@ jobs:
     - name: Install Helm
       run: |
         curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+    - name: 'aks Set context'
+      uses: azure/aks-set-context@v1
+      with:
+       creds: ${{ secrets.AZURE_CREDENTIALS }}
         
     - name: deploy
       env:
         CLUSTER_RESOURCE_GROUP: ${{ env. ClusterResourceGroup }}
         CLUSTER_NAME: ${{ env.clusterName }}
       run: |
-        az aks get-credentials \
-          --resource-group $CLUSTER_RESOURCE_GROUP \
+        #az aks get-credentials \
+         resource-group $CLUSTER_RESOURCE_GROUP \
           --name $CLUSTER_NAME \
           --overwrite-existing
         helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.RepositoryName }}.azurecr.io/${{env.image}} --set image.tag=latest --wait
