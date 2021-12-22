@@ -38,8 +38,8 @@ jobs:
        username: ${{ secrets.REGISTRY_USERNAME }}
        password: ${{ secrets.REGISTRY_PASSWORD }}
        run: | 
-        ##docker build . -t ${{ github.event.inputs.repository }}/${{ github.event.inputs.image }}:${{ github.sha }
-         #docker push ${{ github.event.inputs.repository }}/${{ github.event.inputs.image }}:${{ github.sha }}
+        docker build . -t ${{ github.event.inputs.repository }}/${{ github.event.inputs.image }}:${{ github.sha }
+        docker push ${{ github.event.inputs.repository }}/${{ github.event.inputs.image }}:${{ github.sha }}
         
 
 
