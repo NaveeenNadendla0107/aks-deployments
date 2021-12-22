@@ -32,7 +32,7 @@ env:
   CLUSTER_RESOURCE_GROUP: ${{ github.event.inputs.CLUSTER_RESOURCE_GROUP }}
   NAMESPACE: ${{ github.event.inputs.NAMESPACE }}
   REPO: ${{ github.event.inputs.REPO}}
-  REGISTRY_LOGIN_SERVER: ${{ github.event.inputs.REGISTRY_URL}}
+  REGISTRY_LOGIN_SERVER: ${{ github.event.inputs.REGISTRY_LOGIN_SERVER}}
   IMAGE_NAME: ${{ github.event.inputs.image}}
   
 jobs:
@@ -54,8 +54,8 @@ jobs:
     - name: "Build and push to container registry"
       run: |
    
-         docker build . -t ${{ env.REGISTRY_URL }}/${{env.IMAGE_NAME}}:${{ github.sha }}
-         docker push ${{ env.REGISTRY_URL }}/${{env.IMAGE_NAME}}:${{ github.sha }}
+         docker build . -t ${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }}
+         docker push ${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }}
 
 
     # 'Install helm'
