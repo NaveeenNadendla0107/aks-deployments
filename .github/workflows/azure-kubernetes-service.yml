@@ -57,17 +57,17 @@ jobs:
       uses: azure/aks-set-context@v1
       with:
        creds: ${{ secrets.AZURE_CREDENTIALS }}
-       ResourceGroup: ${{ env.ResourceGroup }}
-       clusterName: ${{ env.clusterName }}
+       resource-group: ${{ env.ResourceGroup }}
+       cluster-name: ${{ env.clusterName }}
         
     - name: deploy
       env:
        ResourceGroup: ${{ env.ResourceGroup }}
        clusterName: ${{ env.clusterName }}
       run: |
-        #az aks get-credentials \
-         ResourceGroup $ResourceGroup \
-          --name $clusterName \
+        az aks get-credentials \
+          --resource-group: ${{ env.ResourceGroup }} \
+          --name $CLUSTER_NAME \
           --overwrite-existing
         helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.RepositoryName }}.azurecr.io/${{env.image}} --set image.tag=latest --wait
         kubectl get services -o wide
