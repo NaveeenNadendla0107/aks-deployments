@@ -9,7 +9,7 @@ on:
      repository:
       description: 'Repository Name'
       required: true
-      default: 'blackbirddev'
+      default: 'Blackbirddev'
     
    
 #env:
