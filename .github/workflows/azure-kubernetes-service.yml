@@ -22,12 +22,12 @@ on:
      
    
 env:
-  CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
-  CLUSTER_RESOURCE_GROUP: ${{ github.event.inputs.ClusterResourceGroup }}
+  cluster Name: ${{ github.event.inputs.ClusterName }}
+  ClusterResourceGroup: ${{ github.event.inputs.ClusterResourceGroup }}
   #NAMESPACE: ${{ github.event.inputs.NAMESPACE }}
-  #REPO: ${{ github.event.inputs.REPO}}
+  Repository Name: ${{ github.event.inputs.repository}}
   #REGISTRY_LOGIN_SERVER: ${{ github.event.inputs.REGISTRY_LOGIN_SERVER}}
-  #IMAGE_NAME: ${{ github.event.inputs.image}}
+  image: ${{ github.event.inputs.image}}
   creds: ${{ secrets.AZURE_CREDENTIALS }}
   
   
@@ -56,13 +56,12 @@ jobs:
         
     - name: deploy
       env:
-        CLUSTER_RESOURCE_GROUP: ${{ github.event.inputs.ClusterResourceGroup }}
-        CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        CLUSTER_RESOURCE_GROUP: ${{ env. ClusterResourceGroup }}
+        CLUSTER_NAME: ${{ env.cluster Name }}
       run: |
-          az login \
-          --resource-group ${{ github.event.inputs.ClusterResourceGroup }} \
-          --name ${{ github.event.inputs.ClusterName}} \
+        az aks get-credentials \
+          --resource-group $CLUSTER_RESOURCE_GROUP \
+          --name $CLUSTER_NAME \
           --overwrite-existing
-          helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ github.event.inputs.repository }}.azurecr.io/${{github.event.inputs.image}} --set image.tag=latest --wait
-          kubectl get services -o wide
+        helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.Repository Name }}.azurecr.io/${{env.image}} --set image.tag=latest --wait
+        kubectl get services -o wide
