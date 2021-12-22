@@ -15,7 +15,7 @@ on:
       description: 'clusterName'
       required: true
       default: 'Blackbird-aks'
-     ClusterResourceGroup:
+     resourceGroup:
       description: 'ClusterResourceGroup'
       required: true
       default: 'Naveen'
@@ -23,7 +23,7 @@ on:
    
 env:
   clusterName: ${{ github.event.inputs.ClusterName }}
-  ClusterResourceGroup: ${{ github.event.inputs.ClusterResourceGroup }}
+  ResourceGroup: ${{ github.event.inputs.resourceGroup }}
   #NAMESPACE: ${{ github.event.inputs.NAMESPACE }}
   RepositoryName: ${{ github.event.inputs.repository}}
   #REGISTRY_LOGIN_SERVER: ${{ github.event.inputs.REGISTRY_LOGIN_SERVER}}
@@ -57,17 +57,17 @@ jobs:
       uses: azure/aks-set-context@v1
       with:
        creds: ${{ secrets.AZURE_CREDENTIALS }}
-       resource-group: ${{ env.ClusterResourceGroup }}
-       cluster-name: ${{ github.event.inputs.ClusterName }}
+       ResourceGroup: ${{ env.ResourceGroup }}
+       clusterName: ${{ env.clusterName }}
         
     - name: deploy
       env:
-        CLUSTER_RESOURCE_GROUP: ${{ env. ClusterResourceGroup }}
-        CLUSTER_NAME: ${{ env.clusterName }}
+       ResourceGroup: ${{ env.ResourceGroup }}
+       clusterName: ${{ env.clusterName }}
       run: |
         #az aks get-credentials \
-         resource-group $CLUSTER_RESOURCE_GROUP \
-          --name $CLUSTER_NAME \
+         ResourceGroup $ResourceGroup \
+          --name $clusterName \
           --overwrite-existing
         helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.RepositoryName }}.azurecr.io/${{env.image}} --set image.tag=latest --wait
         kubectl get services -o wide
