@@ -30,17 +30,16 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} 
     
-    #push build
-    - name: 'Build and push image'
-      uses: azure/docker-login@v1
+    - uses: Azure/docker-login@v1
       with:
-            login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-            username: ${{ secrets.REGISTRY_USERNAME }}
-            password: ${{ secrets.REGISTRY_PASSWORD }}
-    - run: |
-            docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.CLUSTER_NAME }}:${{ github.sha }}
-            docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.CLUSTER_NAME }}:${{ github.sha }}
-        
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVERL }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    
+    - name: "Build and push to container registry"
+      run: |
+        docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
 
 
      #'Install hellm'
