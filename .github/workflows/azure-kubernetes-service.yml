@@ -6,6 +6,10 @@ on:
       description: 'image'
       required: true
       default: 'first'
+     Registry server:
+      description: 'REGISTRY_LOGIN_SERVER'
+      required: true
+      default: blackbirdaks.azurecr.io
    
 env:
   CLUSTER_NAME: blackbird1
@@ -33,12 +37,12 @@ jobs:
     - name: 'Build and push image'
       uses: azure/docker-login@v1
       with:
-            login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+            login-server: ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}
             username: ${{ secrets.REGISTRY_USERNAME }}
             password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
 
-         docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
+         docker build . -t ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
 
     # Install helm
