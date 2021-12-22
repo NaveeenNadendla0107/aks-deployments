@@ -6,34 +6,34 @@ on:
       description: 'image'
       required: true
       default: 'first'
-     REGISTRY_LOGIN_SERVER:
+     Registryserver:
       description: 'Registry server login'
       required: true
       default: 'blackbirdaks.azurecr.io'
-     CLUSTER_RESOURCE_GROUP:
+     clusterResourcegroup:
       description: 'Cluster Resource Group Name'
       required: true
       default: 'Test'
-     CLUSTER_NAME:
+     clusterName:
       description: 'Cluster Name'
       required: true
       default: 'blackbird1'
-     NAMESPACE:
+     Namespace:
       description: 'Namespace Name'
       required: true
       default: 'default'
-     REPO:
+     Repository:
       description: 'Repository Name'
       required: true
       default: 'blackbirdaks'
    
-env:
-  CLUSTER_NAME: ${{ github.event.inputs.CLUSTER_NAME }}
-  CLUSTER_RESOURCE_GROUP: ${{ github.event.inputs.CLUSTER_RESOURCE_GROUP }}
-  NAMESPACE: ${{ github.event.inputs.NAMESPACE }}
-  REPO: ${{ github.event.inputs.REPO}}
-  REGISTRY_LOGIN_SERVER: ${{ github.event.inputs.REGISTRY_LOGIN_SERVER}}
-  IMAGE_NAME: ${{ github.event.inputs.image}}
+#env:
+ # CLUSTER_NAME: ${{ github.event.inputs.CLUSTER_NAME }}
+  #CLUSTER_RESOURCE_GROUP: ${{ github.event.inputs.CLUSTER_RESOURCE_GROUP }}
+  #NAMESPACE: ${{ github.event.inputs.NAMESPACE }}
+  #REPO: ${{ github.event.inputs.REPO}}
+  #REGISTRY_LOGIN_SERVER: ${{ github.event.inputs.REGISTRY_LOGIN_SERVER}}
+  #IMAGE_NAME: ${{ github.event.inputs.image}}
   
 jobs:
   build:
@@ -49,12 +49,12 @@ jobs:
     - name: build
       uses:  Azure/docker-login@v1
       with:
-       login-server: ${{ env.REGISTRY_LOGIN_SERVER }}
+       login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
        username: ${{ secrets.REGISTRY_USERNAME }}
        password: ${{ secrets.REGISTRY_PASSWORD }}
        run: | 
-         docker build . -t ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
-         docker push ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
+         docker build . -t ${{ github.event.inputs.Registryserver }}/${{ github.event.inputs.image }}:${{ github.sha }}
+         docker push ${{ github.event.inputs.Registryserver }}/${{ github.event.inputs.image }}:${{ github.sha }}
         
 
 
