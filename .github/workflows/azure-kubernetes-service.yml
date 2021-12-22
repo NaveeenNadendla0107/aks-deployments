@@ -54,12 +54,9 @@ jobs:
     - name: "Build and push to container registry"
       run: |
    
-         #docker build . -t ${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }}
-         #docker push ${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }}
-         #az acr build --image demoapp:latest --registry ${{ env.REPO }} --file Dockerfile .
-         #az acr build . -t ${{ env.REPO }}/${{env.IMAGE_NAME}}:${{ github.sha }} --file Dockerfile 
-         az acr build --i${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }} --registry ${{ env.REPO }} .
-         
+         docker build . -t ${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }}
+         docker push ${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }}
+        
 
 
     # 'Install helm'
@@ -67,18 +64,17 @@ jobs:
     #  run: |
      #   curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
         
-    - name: 'deploy'
-      uses: azure/k8s-deploy@v1 
+    - name: 'deploy' 
       env:
        CLUSTER_RESOURCE_GROUP_NAME: ${{ env.CLUSTER_RESOURCE_GROUP_NAME }}
        CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
     - run: |
-           az aks get-credentials \
-           --resource-group $CLUSTER_RESOURCE_GROUP \
-           --name $CLUSTER_NAME \
-           --overwrite-existing
-           helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/${{ github.event.inputs.image }} --set image.tag=latest --wait
-           kubectl get services -o wide
+         az aks get-credentials \
+         --resource-group $CLUSTER_RESOURCE_GROUP \
+         --name $CLUSTER_NAME \
+         --overwrite-existing
+         helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/${{ github.event.inputs.image }} --set image.tag=latest --wait
+         kubectl get services -o wide
         
         
                  #az acr build --image app:latest --registry ${{ env.REPO }} --file Dockerfile .
