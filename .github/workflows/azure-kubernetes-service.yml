@@ -31,15 +31,15 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }} 
     
     #push build
-    - name: build
-      uses:  Azure/docker-login@v1
+    - name: 'Build and push image'
+      uses: azure/docker-login@v1
       with:
-       login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-       username: ${{ secrets.REGISTRY_USERNAME }}
-       password: ${{ secrets.REGISTRY_PASSWORD }}
-       run: | 
-        docker build . -t ${{ github.event.inputs.repository }}/${{ github.event.inputs.image }}:${{ github.sha }
-        docker push ${{ github.event.inputs.repository }}/${{ github.event.inputs.image }}:${{ github.sha }}
+            login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+            username: ${{ secrets.REGISTRY_USERNAME }}
+            password: ${{ secrets.REGISTRY_PASSWORD }}
+    - run: |
+            docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/deploy1:${{ github.sha }}
+            docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/deploy1:${{ github.sha }}
         
 
 
