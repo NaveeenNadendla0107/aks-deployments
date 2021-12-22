@@ -8,11 +8,11 @@ on:
       default: 'first'
     
      repository:
-      description: 'Repository Name'
+      description: 'RepositoryName'
       required: true
       default: 'Blackbirddev'
      ClusterName:
-      description: 'cluster Name'
+      description: 'clusterName'
       required: true
       default: 'Blackbird-aks'
      ClusterResourceGroup:
@@ -57,11 +57,11 @@ jobs:
     - name: deploy
       env:
         CLUSTER_RESOURCE_GROUP: ${{ env. ClusterResourceGroup }}
-        CLUSTER_NAME: ${{ env.cluster Name }}
+        CLUSTER_NAME: ${{ env.clusterName }}
       run: |
         az aks get-credentials \
           --resource-group $CLUSTER_RESOURCE_GROUP \
           --name $CLUSTER_NAME \
           --overwrite-existing
-        helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.Repository Name }}.azurecr.io/${{env.image}} --set image.tag=latest --wait
+        helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.RepositoryName }}.azurecr.io/${{env.image}} --set image.tag=latest --wait
         kubectl get services -o wide
