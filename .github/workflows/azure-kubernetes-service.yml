@@ -21,9 +21,9 @@ on:
       default: 'Naveen'
      
    
-#env:
- # CLUSTER_NAME: ${{ github.event.inputs.CLUSTER_NAME }}
-  #CLUSTER_RESOURCE_GROUP: ${{ github.event.inputs.CLUSTER_RESOURCE_GROUP }}
+env:
+  CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
+  CLUSTER_RESOURCE_GROUP: ${{ github.event.inputs.ClusterResourceGroup }}
   #NAMESPACE: ${{ github.event.inputs.NAMESPACE }}
   #REPO: ${{ github.event.inputs.REPO}}
   #REGISTRY_LOGIN_SERVER: ${{ github.event.inputs.REGISTRY_LOGIN_SERVER}}
@@ -53,9 +53,9 @@ jobs:
         curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
         
     - name: deploy
-      uses: Azure/k8s-deploy@v1
-        #CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}
-        #CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
+      env:
+        CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}
+        CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         run: |
