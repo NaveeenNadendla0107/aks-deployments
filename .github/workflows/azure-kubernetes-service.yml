@@ -58,7 +58,7 @@ jobs:
          #docker push ${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }}
          #az acr build --image demoapp:latest --registry ${{ env.REPO }} --file Dockerfile .
          #az acr build . -t ${{ env.REPO }}/${{env.IMAGE_NAME}}:${{ github.sha }} --file Dockerfile 
-         az acr build --i${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }} --registry MyRegistry .
+         az acr build --i${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }} --registry ${{ env.REPO }} .
          
 
 
