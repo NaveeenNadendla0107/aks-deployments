@@ -58,6 +58,7 @@ jobs:
       with:
        creds: ${{ secrets.AZURE_CREDENTIALS }}
        resource-group: ${{ env.ClusterResourceGroup }}
+       cluster-name: ${{ github.event.inputs.ClusterName }}
         
     - name: deploy
       env:
