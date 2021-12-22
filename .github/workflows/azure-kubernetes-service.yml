@@ -59,10 +59,10 @@ jobs:
     #  run: |
      #   curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
         
-    - name: 'deploy' 
+    - name: deploy
       env:
-       CLUSTER_RESOURCE_GROUP_NAME: ${{ env.CLUSTER_RESOURCE_GROUP_NAME }}
-       CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
+        CLUSTER_RESOURCE_GROUP_NAME: ${{ env.CLUSTER_RESOURCE_GROUP_NAME }}
+        CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
       run: |
          az aks get-credentials \
          --resource-group $CLUSTER_RESOURCE_GROUP \
