@@ -46,12 +46,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     
     
-    - uses: Azure/docker-login@v1
-      with:
-        login-server: ${{ env.REGISTRY_LOGIN_SERVER }}
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
-    - name: "Build and push to container registry"
+    - name: Azure/docker-login@v1
       run: |
    
          docker build . -t ${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }}
@@ -68,7 +63,7 @@ jobs:
       env:
        CLUSTER_RESOURCE_GROUP_NAME: ${{ env.CLUSTER_RESOURCE_GROUP_NAME }}
        CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
-    - run: |
+      run: |
          az aks get-credentials \
          --resource-group $CLUSTER_RESOURCE_GROUP \
          --name $CLUSTER_NAME \
