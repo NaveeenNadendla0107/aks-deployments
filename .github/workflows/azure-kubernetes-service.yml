@@ -69,6 +69,10 @@ jobs:
        CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.CLUSTER_RESOURCE_GROUP }}
        CLUSTER_NAME: ${{ github.event.inputs.CLUSTER_NAME }}
     - run: |
+          az aks get-credentials \
+          --resource-group ${{ github.event.inputs.CLUSTER_RESOURCE_GROUP }} \
+          --name ${{ github.event.inputs.CLUSTER_NAME }} \
+          --overwrite-existing
           helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ github.event.inputs.CLUSTER_NAME }}.azurecr.io/${{ github.event.inputs.image }} --set image.tag=latest --wait
           kubectl get services -o wide
         
