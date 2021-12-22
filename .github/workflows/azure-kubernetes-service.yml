@@ -32,6 +32,8 @@ env:
   CLUSTER_RESOURCE_GROUP: ${{ github.event.inputs.CLUSTER_RESOURCE_GROUP }}
   NAMESPACE: ${{ github.event.inputs.NAMESPACE }}
   REPO: ${{ github.event.inputs.REPO}}
+  REGISTRY_URL: ${{ github.event.inputs.REGISTRY_URL}}
+  IMAGE_NAME: ${{ github.event.inputs.image}}
   
 jobs:
   build:
@@ -42,19 +44,17 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: "Build and push to container registry"
+    - uses: Azure/docker-login@v1
+      with:
+        login-server: ${{ env.REGISTRY_URL }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+        run: |
+         docker build . -t ${{ secrets.REGISTRY_URL }}/${{env.IMAGE_NAME}}:${{ github.sha }}
+         docker push ${{ secrets.REGISTRY_URL }}/${{env.IMAGE_NAME}}:${{ github.sha }}
 
-    # Install build
-    - name: build
-      uses: azure/docker-login@v1
-      with: 
-       creds: ${{ secrets.AZURE_CREDENTIALS }}
-       REPO: ${{ env.REPO }
-       login-server: ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}
-       sername: ${{ secrets.REGISTRY_USERNAME }}
-       password: ${{ secrets.REGISTRY_PASSWORD }}
-    - run: |
-         docker build . -t ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
-         docker push ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
 
     # Install helm
    # - name: Install Helm
