@@ -57,10 +57,8 @@ jobs:
            # username: ${{ secrets.REGISTRY_USERNAME }}
            # password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-         docker push ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}/${{github.event.inputs.image}}:${{ github.sha }}
-        #az acr build --image ${{ github.event.inputs.image }}:latest --registry ${{ env.REPO }} --file Dockerfile 
-         #docker build . -t ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
-        # docker push ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
+         docker build . -t ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
+         docker push ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
 
     # Install helm
    # - name: Install Helm
@@ -77,7 +75,7 @@ jobs:
            --resource-group $CLUSTER_RESOURCE_GROUP \
            --name $CLUSTER_NAME \
            --overwrite-existing
-           helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/app --set image.tag=latest --wait
+           helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/${{ github.event.inputs.image }} --set image.tag=latest --wait
            kubectl get services -o wide
         
         
