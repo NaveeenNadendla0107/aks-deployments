@@ -57,11 +57,12 @@ jobs:
         CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}
         CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-        run: |
-         az login \
+       uses: azure-login@v1
+       creds: ${{ secrets.AZURE_CREDENTIALS }}
+       run: |
+          az login \
           --resource-group ${{ github.event.inputs.ClusterResourceGroup }} \
           --name ${{ github.event.inputs.ClusterName}} \
           --overwrite-existing
-         helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ github.event.inputs.repository }}.azurecr.io/${{github.event.inputs.image}} --set image.tag=latest --wait
-         kubectl get services -o wide
+          helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ github.event.inputs.repository }}.azurecr.io/${{github.event.inputs.image}} --set image.tag=latest --wait
+          kubectl get services -o wide
