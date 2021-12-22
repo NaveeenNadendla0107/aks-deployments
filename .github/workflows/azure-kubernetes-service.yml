@@ -22,14 +22,14 @@ jobs:
     # Connect to Azure Container registry (ACR)
     - uses: azure/docker-login@v1
       with:
-        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}.azurecr.io
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         username: ${{ secrets.REGISTRY_USERNAME }} 
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
     # Container build and push to a Azure Container registry (ACR)
     - run: |
-        docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}.azurecr.io/mydeploy:${{ github.sha }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}.azurecr.io/mydeploy:${{ github.sha }}
+        docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/mydeploy:${{ github.sha }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/mydeploy:${{ github.sha }}
 
      #'Install hellm'
     #- name: Install Helm
