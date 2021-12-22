@@ -45,13 +45,15 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     
-    - name: "Build and push to container registry"
+    
     - uses: Azure/docker-login@v1
       with:
         login-server: ${{ env.REGISTRY_URL }}
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
-        run: |
+    - name: "Build and push to container registry"
+      run: |
+   
          docker build . -t ${{ secrets.REGISTRY_URL }}/${{env.IMAGE_NAME}}:${{ github.sha }}
          docker push ${{ secrets.REGISTRY_URL }}/${{env.IMAGE_NAME}}:${{ github.sha }}
 
