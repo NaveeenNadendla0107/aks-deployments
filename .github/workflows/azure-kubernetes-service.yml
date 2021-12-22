@@ -56,6 +56,7 @@ jobs:
       env:
         CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}
         CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
       run: |
         az aks get-credentials \
           --resource-group ${{ github.event.inputs.ClusterResourceGroup }} \
