@@ -29,22 +29,20 @@ jobs:
     # Container build and push to a Azure Container registry (ACR)
     - run: |
         docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}.azurecr.io/mydeploy:${{ github.sha }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}.azurecr.io/mydeploy:${{ github.sha }
-
-    # Install helm
-    - name: Install Helm
-      run: |
-        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}.azurecr.io/mydeploy:${{ github.sha }}
+     #'Install hellm'
+    #- name: Install Helm
+      #run: |
+       # curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
         
-    - name: deploy
-      env:
-        CLUSTER_RESOURCE_GROUP_NAME: ${{ env.CLUSTER_RESOURCE_GROUP }}
-        CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
-      run: |
-        az aks get-credentials \
-          --resource-group $CLUSTER_RESOURCE_GROUP \
-          --name $CLUSTER_NAME \
-          --overwrite-existing
-        helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/demoapp --set image.tag=latest --wait
-        kubectl get services -o wide
-        
+    #- name: deploy
+      #env:
+        #CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}
+        #CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
+      #run: |
+        #az aks get-credentials \
+          #--resource-group $CLUSTER_RESOURCE_GROUP \
+          #--name $CLUSTER_NAME \
+          #--overwrite-existing
+        #helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/${{env.IMAGE_NAME}} --set image.tag=latest --wait
+        #kubectl get services -o wide
