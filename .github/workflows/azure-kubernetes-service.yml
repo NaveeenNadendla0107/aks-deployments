@@ -44,10 +44,11 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} 
-    - name: Azure/docker-login@v1
-      run: | 
     
-          az acr build --image ${{env.IMAGE_NAME}}:${{ env.REPO }} --file Dockerfile .
+    #push build
+    - name: build
+      run: | 
+         az acr build --image ${{env.IMAGE_NAME}}:${{ env.REPO }} --file Dockerfile .
         
 
 
@@ -58,7 +59,7 @@ jobs:
         
     - name: deploy
       env:
-        CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}
+        CLUSTER_RESOURCE_GROUP_NAME: ${{ env.CLUSTER_RESOURCE_GROUP }}
         CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
       run: |
         az aks get-credentials \
