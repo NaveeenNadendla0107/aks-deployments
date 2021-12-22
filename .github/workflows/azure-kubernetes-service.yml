@@ -65,6 +65,7 @@ jobs:
        ResourceGroup: ${{ env.ResourceGroup }}
        clusterName: ${{ env.clusterName }}
       run: |
-       az aks get-credentials -- ${{ secrets.AZURE_CREDENTIALS }} --name/${{ env.clusterName }} --overwrite-existing --resource-group/${{ env.ResourceGroup }}    
-        helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.RepositoryName }}.azurecr.io/${{env.image}} --set image.tag=latest --wait
+       #az aks get-credentials -- ${{ secrets.AZURE_CREDENTIALS }} --name/${{ env.clusterName }} --overwrite-existing --resource-group/${{ env.ResourceGroup }}    
+       az aks get-credentials ---- ${{ secrets.AZURE_CREDENTIALS }} --name Blackbird-aks --overwrite-existing --resource-group Naveen
+       helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.RepositoryName }}.azurecr.io/${{env.image}} --set image.tag=latest --wait
         kubectl get services -o wide
