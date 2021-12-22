@@ -54,22 +54,22 @@ jobs:
         
 
 
-    # 'Install helm'
-   # - name: Install Helm
-    #  run: |
-     #   curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+     #'Install helm'
+    - name: Install Helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
         
     - name: deploy
       env:
-        CLUSTER_RESOURCE_GROUP_NAME: ${{ env.CLUSTER_RESOURCE_GROUP_NAME }}
+        CLUSTER_RESOURCE_GROUP_NAME: ${{ env.CLUSTER_RESOURCE_GROUP }}
         CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
       run: |
-         az aks get-credentials \
-         --resource-group $CLUSTER_RESOURCE_GROUP \
-         --name $CLUSTER_NAME \
-         --overwrite-existing
-         helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/${{ github.event.inputs.image }} --set image.tag=latest --wait
-         kubectl get services -o wide
+        az aks get-credentials \
+          --resource-group $CLUSTER_RESOURCE_GROUP \
+          --name $CLUSTER_NAME \
+          --overwrite-existing
+        helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/demoapp --set image.tag=latest --wait
+        kubectl get services -o wide
         
         
                  #az acr build --image app:latest --registry ${{ env.REPO }} --file Dockerfile .
