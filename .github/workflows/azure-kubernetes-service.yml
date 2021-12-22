@@ -57,7 +57,7 @@ jobs:
            # username: ${{ secrets.REGISTRY_USERNAME }}
            # password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        az acr build --${{ github.event.inputs.image }}:latest --registry ${{ env.REPO }} --file Dockerfile 
+        az acr build --image ${{ github.event.inputs.image }}:latest --registry ${{ env.REPO }} --file Dockerfile 
          #docker build . -t ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
         # docker push ${{ github.event.inputs.REGISTRY_LOGIN_SERVER }}/${{ github.event.inputs.image }}:${{ github.sha }}
 
