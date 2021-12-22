@@ -67,13 +67,13 @@ jobs:
       with:
        CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}
        CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
-     # run: |
-       # az aks get-credentials \
-         # --resource-group $CLUSTER_RESOURCE_GROUP \
-          #--name $CLUSTER_NAME \
-          #--overwrite-existing
-        #helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/demoapp --set image.tag=latest --wait
-        #kubectl get services -o wide
+       run: |
+        az aks get-credentials \
+        --resource-group $CLUSTER_RESOURCE_GROUP \
+        --name $CLUSTER_NAME \
+        --overwrite-existing
+        helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/demoapp --set image.tag=latest --wait
+        kubectl get services -o wide
         
         
                  #az acr build --image app:latest --registry ${{ env.REPO }} --file Dockerfile .
