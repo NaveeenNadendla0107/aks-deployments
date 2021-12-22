@@ -1,24 +1,35 @@
-on: [push]
-env:
-  CLUSTER_NAME: Blackbird-aks
-  CLUSTER_RESOURCE_GROUP: Naveen
-  NAMESPACE: default
-  REPO: Blackbirddev
+name: Aks deploy
+on: 
+ workflow_dispatch:
+   
+    
+   
+#env:
+ # CLUSTER_NAME: ${{ github.event.inputs.CLUSTER_NAME }}
+  #CLUSTER_RESOURCE_GROUP: ${{ github.event.inputs.CLUSTER_RESOURCE_GROUP }}
+  #NAMESPACE: ${{ github.event.inputs.NAMESPACE }}
+  #REPO: ${{ github.event.inputs.REPO}}
+  #REGISTRY_LOGIN_SERVER: ${{ github.event.inputs.REGISTRY_LOGIN_SERVER}}
+  #IMAGE_NAME: ${{ github.event.inputs.image}}
   
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: dev
     steps:
     - uses: actions/checkout@master
-    - name: Azure Login
-      uses: azure/login@v1
+    
+    # Connect to Azure Container registry (ACR)
+    - uses: azure/docker-login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    # Install helm
-    - name: build
-      run: |
-        az acr build --image demoapp:latest --registry ${{ env.REPO }} --file Dockerfile .
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }} 
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    
+    # Container build and push to a Azure Container registry (ACR)
+    - run: |
+        docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}.azurecr.io/mydeploy:${{ github.sha }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}.azurecr.io/mydeploy:${{ github.sha }
 
     # Install helm
     - name: Install Helm
