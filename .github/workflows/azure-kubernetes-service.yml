@@ -68,7 +68,7 @@ jobs:
         CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}
         CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
       run: |
-       az aks get-credentials \
+        az aks get-credentials \
           --resource-group $CLUSTER_RESOURCE_GROUP \
           --name $CLUSTER_NAME \
           --overwrite-existing
