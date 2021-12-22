@@ -53,12 +53,12 @@ jobs:
         curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
         
     - name: deploy
-      with:
-       uses: Azure/k8s-deploy@v1
+      uses: Azure/k8s-deploy@v1
         #CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}
         #CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
-       creds: ${{ secrets.AZURE_CREDENTIALS }}
-       run: |
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        run: |
          az login \
           --resource-group ${{ github.event.inputs.ClusterResourceGroup }} \
           --name ${{ github.event.inputs.ClusterName}} \
