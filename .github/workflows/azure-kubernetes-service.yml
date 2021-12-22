@@ -67,8 +67,7 @@ jobs:
      #   curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
         
     - name: 'deploy'
-      uses: azure/k8s-deploy@v1
-      
+      uses: azure/k8s-deploy@v1 
       env:
        CLUSTER_RESOURCE_GROUP_NAME: ${{ env.CLUSTER_RESOURCE_GROUP_NAME }}
        CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
