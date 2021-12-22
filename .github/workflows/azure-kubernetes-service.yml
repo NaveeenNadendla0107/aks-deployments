@@ -32,7 +32,7 @@ env:
   CLUSTER_RESOURCE_GROUP: ${{ github.event.inputs.CLUSTER_RESOURCE_GROUP }}
   NAMESPACE: ${{ github.event.inputs.NAMESPACE }}
   REPO: ${{ github.event.inputs.REPO}}
-  REGISTRY_URL: ${{ github.event.inputs.REGISTRY_URL}}
+  REGISTRY_LOGIN_SERVER: ${{ github.event.inputs.REGISTRY_URL}}
   IMAGE_NAME: ${{ github.event.inputs.image}}
   
 jobs:
@@ -48,7 +48,7 @@ jobs:
     
     - uses: Azure/docker-login@v1
       with:
-        login-server: ${{ env.REGISTRY_URL }}
+        login-server: ${{ env.REGISTRY_LOGIN_SERVER }}
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - name: "Build and push to container registry"
