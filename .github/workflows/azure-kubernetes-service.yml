@@ -43,12 +43,9 @@ jobs:
     - name: Azure Login
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-    
-    
+        creds: ${{ secrets.AZURE_CREDENTIALS }} 
     - name: Azure/docker-login@v1
-      run: |
-   
+      run: | 
          docker build . -t ${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }}
          docker push ${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }}
         
