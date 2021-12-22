@@ -22,12 +22,16 @@ on:
       description: 'Namespace Name'
       required: true
       default: 'default'
+     REPO:
+      description: 'Repository Name'
+      required: true
+      default: 'blackbirdaks'
    
 env:
-  CLUSTER_NAME: blackbird1
-  CLUSTER_RESOURCE_GROUP: Test
-  NAMESPACE: default
-  REPO: blackbirdaks
+  CLUSTER_NAME: ${{ github.event.inputs.CLUSTER_NAME }}
+  CLUSTER_RESOURCE_GROUP: ${{ github.event.inputs.CLUSTER_RESOURCE_GROUP }}
+  NAMESPACE: ${{ github.event.inputs.NAMESPACE }}
+  REPO: ${{ github.event.inputs.REPO}}
   
 jobs:
   build:
@@ -66,15 +70,15 @@ jobs:
       uses: azure/k8s-deploy@v1
       
       env:
-       CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.CLUSTER_RESOURCE_GROUP }}
-       CLUSTER_NAME: ${{ github.event.inputs.CLUSTER_NAME }}
+       CLUSTER_RESOURCE_GROUP_NAME: ${{ env.CLUSTER_RESOURCE_GROUP_NAME }}
+       CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
     - run: |
-          az aks get-credentials \
-          --resource-group ${{ github.event.inputs.CLUSTER_RESOURCE_GROUP }} \
-          --name ${{ github.event.inputs.CLUSTER_NAME }} \
-          --overwrite-existing
-          helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ github.event.inputs.CLUSTER_NAME }}.azurecr.io/${{ github.event.inputs.image }} --set image.tag=latest --wait
-          kubectl get services -o wide
+           az aks get-credentials \
+           --resource-group $CLUSTER_RESOURCE_GROUP \
+           --name $CLUSTER_NAME \
+           --overwrite-existing
+           helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/app --set image.tag=latest --wait
+           kubectl get services -o wide
         
         
                  #az acr build --image app:latest --registry ${{ env.REPO }} --file Dockerfile .
