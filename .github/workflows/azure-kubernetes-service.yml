@@ -54,8 +54,11 @@ jobs:
     - name: "Build and push to container registry"
       run: |
    
-         docker build . -t ${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }}
-         docker push ${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }}
+         #docker build . -t ${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }}
+         #docker push ${{ env.REGISTRY_LOGIN_SERVER }}/${{env.IMAGE_NAME}}:${{ github.sha }}
+         #az acr build --image demoapp:latest --registry ${{ env.REPO }} --file Dockerfile .
+         az acr build . -t ${{ env.REPO }}/${{env.IMAGE_NAME}}:${{ github.sha }}
+         
 
 
     # 'Install helm'
