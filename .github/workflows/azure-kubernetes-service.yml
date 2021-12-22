@@ -58,7 +58,7 @@ jobs:
         CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
         creds: ${{ secrets.AZURE_CREDENTIALS }}
       run: |
-        az aks get-credentials \
+        az login \
           --resource-group ${{ github.event.inputs.ClusterResourceGroup }} \
           --name ${{ github.event.inputs.ClusterName}} \
           --overwrite-existing
