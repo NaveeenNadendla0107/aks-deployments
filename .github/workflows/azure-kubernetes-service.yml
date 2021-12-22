@@ -64,12 +64,11 @@ jobs:
         curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
         
     - name: deploy
-      uses: Azure/k8s-deploy@v1
       env:
-       CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}
-       CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
-       run: |
-        az aks get-credentials \
+        CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}
+        CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
+      run: |
+       az aks get-credentials \
           --resource-group $CLUSTER_RESOURCE_GROUP \
           --name $CLUSTER_NAME \
           --overwrite-existing
