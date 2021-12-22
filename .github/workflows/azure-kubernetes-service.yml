@@ -56,8 +56,8 @@ jobs:
         
     - name: deploy
       env:
-        CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}
-        CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
+        CLUSTER_RESOURCE_GROUP: ${{ github.event.inputs.ClusterResourceGroup }}
+        CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
         creds: ${{ secrets.AZURE_CREDENTIALS }}
       run: |
           az login \
