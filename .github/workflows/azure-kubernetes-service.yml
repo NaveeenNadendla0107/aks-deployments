@@ -65,12 +65,14 @@ jobs:
     - name: 'Install Helm'
       run: |
         curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-    #- name: 'aks Set context'
-     # uses: azure/aks-set-context@v1
-      #with:
-       #creds: ${{ secrets.AZURE_CREDENTIALS }}
-       #resource-group: ${{ env.ResourceGroup }}
-       #cluster-name: ${{ env.clusterName }}
+    - name: "Create container registry image pull secret"
+      uses: Azure/k8s-create-secret@v1
+      with:
+        container-registry-url: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        secret-name: acr-secret
+        namespace: ${{env.NAMESPACE}}
         
     - name: deploy
       env:
