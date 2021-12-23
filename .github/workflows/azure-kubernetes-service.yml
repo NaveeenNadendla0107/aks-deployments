@@ -23,6 +23,10 @@ on:
       description: 'appname'
       required: true
       default: 'vote-app'
+     yamlfilename:
+      description: 'yamlfilename'
+      required: true
+      default: 'azure-vote-front'
      
    
 env:
