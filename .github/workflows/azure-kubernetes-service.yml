@@ -10,17 +10,17 @@ on:
      containerregistry:
       description: 'containerregistry'
       required: true
-      default: mongoacr
+      default: acr0107
       
      ClusterName:
       description: 'clusterName'
       required: true
-      default: 'mongo1'
+      default: 'testing03'
      
      resourceGroup:
       description: 'ClusterResourceGroup'
       required: true
-      default: 'mongo-aks'
+      default: 'testing'
      
      appname:
       description: 'appname'
