@@ -1,52 +1,69 @@
 name: Aks deploy
 on: 
  workflow_dispatch:
-   
+   inputs:
+     image:
+      description: image
+      required: true
+      default: first-deploy-app
+     
+     containerregistry:
+      description: 'containerregistry'
+      required: true
+      default: mongoacr
+      
+     ClusterName:
+      description: 'clusterName'
+      required: true
+      default: 'mongo1'
+     
+     resourceGroup:
+      description: 'ClusterResourceGroup'
+      required: true
+      default: 'mongo-aks'
+     
+     appname:
+      description: 'appname'
+      required: true
+      default: 'vote-app'
     
-   
+     helmchartname:
+      description: 'helmchartname'
+      required: true
+      default: 'azure-vote-front'
 #env:
- # CLUSTER_NAME: ${{ github.event.inputs.CLUSTER_NAME }}
-  #CLUSTER_RESOURCE_GROUP: ${{ github.event.inputs.CLUSTER_RESOURCE_GROUP }}
-  #NAMESPACE: ${{ github.event.inputs.NAMESPACE }}
-  #REPO: ${{ github.event.inputs.REPO}}
-  #REGISTRY_LOGIN_SERVER: ${{ github.event.inputs.REGISTRY_LOGIN_SERVER}}
-  #IMAGE_NAME: ${{ github.event.inputs.image}}
+ # CLUSTER_NAME: mongo1
+  #CLUSTER_RESOURCE_GROUP: mongo-aks
+  #NAMESPACE: default
+  #REPO: mongoacr
   
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: dev
     steps:
     - uses: actions/checkout@master
-    
-    # Connect to Azure Container registry (ACR)
-    - uses: azure/docker-login@v1
+    - name: Azure Login
+      uses: azure/login@v1
       with:
-        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-        username: ${{ secrets.REGISTRY_USERNAME }} 
-        password: ${{ secrets.REGISTRY_PASSWORD }}
-    
-    # Container build and push to a Azure Container registry (ACR)
-    - run: |
-        docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/mydeploy:${{ github.sha }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/mydeploy:${{ github.sha }}
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-     #'Install hellm'
-    #- name: Install Helm
-      #run: |
-       # curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+       # Install build
+    - name: build
+      run: |
+        az acr build --image ${{ github.event.inputs.image}}:latest --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
+    # Install helm
+    - name: Install Helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
         
-    #- name: deploy
-      #env:
-        #CLUSTER_RESOURCE_GROUP: ${{ env.CLUSTER_RESOURCE_GROUP }}
-        #CLUSTER_NAME: ${{ env.CLUSTER_NAME }}
-      #run: |
-        #az aks get-credentials \
-          #--resource-group $CLUSTER_RESOURCE_GROUP \
-          #--name $CLUSTER_NAME \
-          #--overwrite-existing
-        #helm upgrade -i vote-app azure-vote-front/ --set image.repository=${{ env.REPO }}.azurecr.io/${{env.IMAGE_NAME}} --set image.tag=latest --wait
-        #kubectl get services -o wide
-        
-        
-                
+    - name: deploy
+      env:
+        CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
+        CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
+      run: |
+        az aks get-credentials \
+          --resource-group ${{ github.event.inputs.resourceGroup }} \
+          --name ${{ github.event.inputs.ClusterName }} \
+          --overwrite-existing
+        helm upgrade -i ${{ github.event.inputs.appname }} ${{ github.event.inputs.helmchartname }}/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=latest --wait
+        kubectl get services -o wide
