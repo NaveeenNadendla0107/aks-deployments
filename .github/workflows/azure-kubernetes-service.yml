@@ -56,6 +56,13 @@ jobs:
       run: |
         curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
         
+         - name: deploy
+      env:
+        CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
+        CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
+        run: |
+           az aks update -n ${{ github.event.inputs.ClusterName }} -g ${{ github.event.inputs.resourceGroup }} --attach-acr ${{ github.event.inputs.containerregistry }}
+        
     - name: deploy
       env:
         CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
