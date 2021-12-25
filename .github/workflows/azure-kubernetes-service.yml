@@ -45,7 +45,9 @@ jobs:
     - name: Azure Login
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        #creds: ${{ secrets.AZURE_CREDENTIALS }}
+        SPN_USERNAME: ${{ secrets.SPN_USERNAME }}
+        SPN_PASSWORD: ${{ secrets.AZURE_SPN_PASSWORD }}
 
        # Install build
     - name: build
