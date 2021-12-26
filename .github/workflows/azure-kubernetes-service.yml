@@ -10,17 +10,17 @@ on:
      containerregistry:
       description: 'containerregistry'
       required: true
-      default: acr0107
+      default: acr17
       
      ClusterName:
       description: 'clusterName'
       required: true
-      default: 'testing03'
+      default: 'test'
      
      resourceGroup:
       description: 'ClusterResourceGroup'
       required: true
-      default: 'testing'
+      default: 'test01'
      
      appname:
       description: 'appname'
