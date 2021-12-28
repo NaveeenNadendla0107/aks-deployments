@@ -42,7 +42,7 @@ jobs:
       #name: Azure Login
       runs-on: ubuntu-latest
       steps:
-        - uses: azure/login@v1
+        - uses: actions/checkout@master
        # - name: Azure Login
           with:
            creds: ${{ secrets.AZURE_CREDENTIALS }}
