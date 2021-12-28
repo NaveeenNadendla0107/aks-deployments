@@ -51,10 +51,12 @@ jobs:
          runs-on: ubuntu-latest
          steps:
          - uses: actions/checkout@master
-         - run: ...
          - run: |
             az acr build --image ${{ github.event.inputs.image}}:latest --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
     helm-install:
+          if: ${{ always() }}
+          needs: [Azure-login, install-build]
+
           #name: Install Helm
           runs-on: ubuntu-latest
           steps:
@@ -72,6 +74,8 @@ jobs:
           # az aks update -n ${{ github.event.inputs.ClusterName }} -g ${{ github.event.inputs.resourceGroup }} --attach-acr ${{ github.event.inputs.containerregistry }}
         
     build-deploy:
+           if: ${{ always() }}
+           needs: [Azure-login, install-build, helm-install]
            #name: deploy build
            runs-on: ubuntu-latest
            steps:
