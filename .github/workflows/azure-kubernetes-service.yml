@@ -47,7 +47,7 @@ jobs:
           with:
            creds: ${{ secrets.AZURE_CREDENTIALS }}
         - run: |
-            az acr build --image ${{ github.event.inputs.image}}:latest --registry ${{ github.event.inputs.containerregistry }} 
+            az acr build --image ${{ github.event.inputs.image}}:latest --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
    # install-build:
     #     needs:  Azure-login
      #    runs-on: ubuntu-latest
