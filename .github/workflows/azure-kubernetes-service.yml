@@ -38,24 +38,29 @@ on:
   #REPO: mongoacr
   
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-
-       # Install build
-    - name: build
-      run: |
-        az acr build --image ${{ github.event.inputs.image}}:latest --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
+    build-login:
+      # name: Azure Login
+       runs-on: ubuntu-latest
+       steps:
+        - uses: actions/checkout@master
+        - name: Azure Login
+         # uses: azure/login@v1
+          with:
+           creds: ${{ secrets.AZURE_CREDENTIALS }}
+    build-push:
+           name: build push
+           runs-on: ubuntu-latest
+          #runs-on: ubuntu-latest
+           steps:
+            - uses: actions/checkout@master
+            - name: build push
+         # uses: azure/login@v1
+              run: |
+               az acr build --image ${{ github.event.inputs.image}}:latest --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
     # Install helm
-    - name: Install Helm
-      run: |
-        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+  #  - name: Install Helm
+   #   run: |
+    #    curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
         
          #- name: deploy
       #env:
@@ -64,14 +69,14 @@ jobs:
        # run: |
           # az aks update -n ${{ github.event.inputs.ClusterName }} -g ${{ github.event.inputs.resourceGroup }} --attach-acr ${{ github.event.inputs.containerregistry }}
         
-    - name: deploy
-      env:
-        CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
-        CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
-      run: |
-        az aks get-credentials \
-          --resource-group ${{ github.event.inputs.resourceGroup }} \
-          --name ${{ github.event.inputs.ClusterName }} \
-          --overwrite-existing
-        helm upgrade -i ${{ github.event.inputs.appname }} ${{ github.event.inputs.helmchartname }}/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=latest --wait
-        kubectl get services -o wide
+    #- name: deploy
+     # env:
+      #  CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
+       # CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
+      #run: |
+       # az aks get-credentials \
+        #  --resource-group ${{ github.event.inputs.resourceGroup }} \
+         # --name ${{ github.event.inputs.ClusterName }} \
+          #--overwrite-existing
+        #helm upgrade -i ${{ github.event.inputs.appname }} ${{ github.event.inputs.helmchartname }}/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=latest --wait
+        #kubectl get services -o wide
