@@ -31,6 +31,10 @@ on:
       description: 'helmchartname'
       required: true
       default: 'azure-vote-front'
+     tags:
+      description: 'docker image tag'
+      required: true
+      default: 'latest'
 #env:
  # CLUSTER_NAME: mongo1
   #CLUSTER_RESOURCE_GROUP: mongo-aks
@@ -51,7 +55,8 @@ jobs:
        # Install build
     - name: build
       run: |
-        az acr build --image ${{ github.event.inputs.image}}:latest --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
+        #az acr build --image ${{ github.event.inputs.image}}:latest --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
+        az acr build --image ${{ github.event.inputs.image}}:${{ github.event.inputs.tags}} --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
     # Install helm
     - name: Install Helm
       run: |
