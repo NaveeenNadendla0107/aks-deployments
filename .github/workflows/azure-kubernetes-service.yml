@@ -39,31 +39,31 @@ on:
   
 jobs:
     build-login:
-      name: Azure Login
+      #name: Azure Login
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@master
-        - name: Azure Login
+       # - name: Azure Login
          # uses: azure/login@v1
           with:
            creds: ${{ secrets.AZURE_CREDENTIALS }}
     build-push:
-           name: build push
+           #name: build push
            runs-on: ubuntu-latest
           #runs-on: ubuntu-latest
            steps:
             - uses: actions/checkout@master
-            - name: build push
+            #- name: build push
          # uses: azure/login@v1
-              run: |
+            - run: |
                az acr build --image ${{ github.event.inputs.image}}:latest --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
     helm-install:
-          name: Install Helm
+          #name: Install Helm
           runs-on: ubuntu-latest
           steps:
             - uses: actions/checkout@master
-            - name: Helm install
-              run: |
+           # - name: Helm install
+            - run: |
                curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
      
     
@@ -75,13 +75,13 @@ jobs:
           # az aks update -n ${{ github.event.inputs.ClusterName }} -g ${{ github.event.inputs.resourceGroup }} --attach-acr ${{ github.event.inputs.containerregistry }}
         
     build-deploy:
-           name: deploy build
+           #name: deploy build
            runs-on: ubuntu-latest
            steps:
             - uses: actions/checkout@master
-            - name: deploy build
+           # - name: deploy build
               #run: |
-              with:
+              env:
                CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
                CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
                run: |
