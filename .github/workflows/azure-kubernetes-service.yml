@@ -48,7 +48,7 @@ jobs:
           with:
            creds: ${{ secrets.AZURE_CREDENTIALS }}
        # Install build
-   # - name: build
+        - name: build
         - run: |
            az acr build --image ${{ github.event.inputs.image}}:latest --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
     helm-install:
