@@ -38,19 +38,20 @@ on:
   #REPO: mongoacr
   
 jobs:
-    build-push:
+    Azure-login:
       #name: Azure Login
       runs-on: ubuntu-latest
       steps:
         - uses: azure/login@v1
        # - name: Azure Login
-         
           with:
            creds: ${{ secrets.AZURE_CREDENTIALS }}
     install-build:
+         needs:  Azure-login
          runs-on: ubuntu-latest
          steps:
          - uses: actions/checkout@master
+         - run: ...
          - run: |
             az acr build --image ${{ github.event.inputs.image}}:latest --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
     helm-install:
