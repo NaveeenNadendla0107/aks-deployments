@@ -92,9 +92,6 @@ jobs:
                 creds: ${{ secrets.AZURE_CREDENTIALS }}
             # deploy   
              - name: deploy
-               #env:
-                #CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
-                #CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
                run: |
                 az aks get-credentials \
                 --resource-group ${{ github.event.inputs.resourceGroup }} \
