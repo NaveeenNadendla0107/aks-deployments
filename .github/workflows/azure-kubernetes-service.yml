@@ -39,9 +39,9 @@ on:
   
 jobs:
     build-login:
-      # name: Azure Login
-       runs-on: ubuntu-latest
-       steps:
+      name: Azure Login
+      runs-on: ubuntu-latest
+      steps:
         - uses: actions/checkout@master
         - name: Azure Login
          # uses: azure/login@v1
