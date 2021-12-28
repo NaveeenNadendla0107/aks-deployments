@@ -52,11 +52,15 @@ jobs:
        needs: [Azure-login]
        runs-on: ubuntu-latest
        steps:
-         - uses: actions/checkout@master
-           with:
-            creds: ${{ secrets.AZURE_CREDENTIALS }}
-         - run: |
-            az acr build --image ${{ github.event.inputs.image}}:latest --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
+       - uses: actions/checkout@master
+       - name: Azure Login
+         uses: azure/login@v1
+         with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+       # Install build
+       - name: build
+         run: |
+          az acr build --image ${{ github.event.inputs.image}}:latest --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
     helm-install:
           if: ${{ always() }}
           needs: [Azure-login,  push-to-docker]
