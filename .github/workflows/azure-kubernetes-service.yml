@@ -86,11 +86,11 @@ jobs:
            needs: [Azure-login, push-to-docker, helm-install]
            #name: deploy build
            runs-on: ubuntu-latest
-           steps:
-            - uses: azure/k8s-deploy@v1
+           #steps:
+           # - uses: azure/k8s-deploy@v1
            # - name: deploy build
               #run: |
-              env:
+           env:
                CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
                CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
                run: |
