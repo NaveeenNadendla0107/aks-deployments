@@ -85,16 +85,17 @@ jobs:
            needs: [Azure-login, push-to-docker, helm-install]
            runs-on: ubuntu-latest
            steps:
-             - uses: actions/checkout@master
+           - uses:  azure/login@v1
+           - uses: actions/checkout@master
              #- name: deploy
-               with:
+             with:
                 creds: ${{ secrets.AZURE_CREDENTIALS }}
             # deploy   
-             - name: deploy
-               env:
+           - name: deploy
+             env:
                 CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
                 CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
-               run: |
+             run: |
                  az aks get-credentials \
                  --resource-group ${{ github.event.inputs.resourceGroup }} \
                  --name ${{ github.event.inputs.ClusterName }} \
