@@ -82,20 +82,21 @@ jobs:
           # az aks update -n ${{ github.event.inputs.ClusterName }} -g ${{ github.event.inputs.resourceGroup }} --attach-acr ${{ github.event.inputs.containerregistry }}
         
     build-deploy:
-          if: ${{ always() }}
-          needs: [Azure-login, push-to-docker, helm-install]
-          runs-on: ubuntu-latest
-         # steps:
-          #- name: deploy
-          #- uses: azure/k8s-deploy@v1
-          
-          env:
-            CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
-            CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
-            run: |
-             az aks get-credentials \
-              --resource-group ${{ github.event.inputs.resourceGroup }} \
-              --name ${{ github.event.inputs.ClusterName }} \
-              --overwrite-existing
-             helm upgrade -i ${{ github.event.inputs.appname }} ${{ github.event.inputs.helmchartname }}/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=latest --wait
-             kubectl get services -o wide
+           if: ${{ always() }}
+           needs: [Azure-login, push-to-docker, helm-install]
+           #name: deploy build
+           runs-on: ubuntu-latest
+           steps:
+            - uses: actions/checkout@master
+           # - name: deploy build
+              #run: |
+              env:
+               CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
+               CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
+               run: |
+                az aks get-credentials \
+                --resource-group ${{ github.event.inputs.resourceGroup }} \
+                --name ${{ github.event.inputs.ClusterName }} \
+                --overwrite-existing
+                  helm upgrade -i ${{ github.event.inputs.appname }} ${{ github.event.inputs.helmchartname }}/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=latest --wait
+                  kubectl get services -o wide 
