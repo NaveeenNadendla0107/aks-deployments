@@ -85,7 +85,7 @@ jobs:
            needs: [Azure-login, push-to-docker, helm-install]
            runs-on: ubuntu-latest
            steps:
-             - uses:  azure/login@v1
+             - uses: actions/checkout@master
              #- name: deploy
                with:
                 creds: ${{ secrets.AZURE_CREDENTIALS }}
