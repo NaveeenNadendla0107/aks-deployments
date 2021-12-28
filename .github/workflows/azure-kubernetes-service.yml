@@ -31,36 +31,48 @@ on:
       description: 'helmchartname'
       required: true
       default: 'azure-vote-front'
-     tag:
-      description: 'image tag name'
-      required: true
-      default: 'latest'
-#env:
- # CLUSTER_NAME: mongo1
-  #CLUSTER_RESOURCE_GROUP: mongo-aks
-  #NAMESPACE: default
-  #REPO: mongoacr
+
+env:
+ CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
+ CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
   
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    Azure-login:
+      #name: Azure Login
+      runs-on: ubuntu-latest
+      steps:
+        - uses:  azure/login@v1
+       # - name: Azure Login
+          with:
+           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-
+    push-to-docker:
+       if: ${{ always() }}
+       needs: [Azure-login]
+       runs-on: ubuntu-latest
+       steps:
+       - uses: actions/checkout@master
+       - name: Azure Login
+         uses: azure/login@v1
+         with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
        # Install build
-    - name: build
-      run: |
-        az acr build --image ${{ github.event.inputs.image}}:${{ github.event.inputs.tag}} --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
-    # Install helm
-    - name: Install Helm
-      run: |
-        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-        
+       - name: build
+         run: |
+          az acr build --image ${{ github.event.inputs.image}}:latest --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
+    helm-install:
+          if: ${{ always() }}
+          needs: [Azure-login,  push-to-docker]
+
+          #name: Install Helm
+          runs-on: ubuntu-latest
+          steps:
+            - uses: actions/checkout@master
+           # - name: Helm install
+            - run: |
+               curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+     
+    
          #- name: deploy
       #env:
        # CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
@@ -68,14 +80,24 @@ jobs:
        # run: |
           # az aks update -n ${{ github.event.inputs.ClusterName }} -g ${{ github.event.inputs.resourceGroup }} --attach-acr ${{ github.event.inputs.containerregistry }}
         
-    - name: deploy
-      env:
-        CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
-        CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
-      run: |
-        az aks get-credentials \
-          --resource-group ${{ github.event.inputs.resourceGroup }} \
-          --name ${{ github.event.inputs.ClusterName }} \
-          --overwrite-existing
-        helm upgrade -i ${{ github.event.inputs.appname }} ${{ github.event.inputs.helmchartname }}/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=${{ github.event.inputs.tag}} --wait
-        kubectl get services -o wide
+    build-deploy:
+           if: ${{ always() }}
+           needs: [Azure-login, push-to-docker, helm-install]
+           runs-on: ubuntu-latest
+           steps:
+             - uses:  azure/login@v1
+             #- name: deploy
+               with:
+                creds: ${{ secrets.AZURE_CREDENTIALS }}
+            # deploy   
+             - name: deploy
+               env:
+                CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
+                CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
+               run: |
+                 az aks get-credentials \
+                 --resource-group ${{ github.event.inputs.resourceGroup }} \
+                 --name ${{ github.event.inputs.ClusterName }} \
+                 --overwrite-existing
+                 helm upgrade -i ${{ github.event.inputs.appname }} ${{ github.event.inputs.helmchartname }}/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=latest --wait
+                 kubectl get services -o wide
