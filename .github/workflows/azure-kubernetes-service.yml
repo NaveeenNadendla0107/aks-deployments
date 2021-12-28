@@ -87,7 +87,7 @@ jobs:
            #name: deploy build
            runs-on: ubuntu-latest
            steps:
-           #- uses: azure/deploy@v1
+           - uses: azure/deploy@v1
            - name: deploy build
               #run: |
          
