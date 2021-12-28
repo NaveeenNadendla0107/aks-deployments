@@ -31,11 +31,10 @@ on:
       description: 'helmchartname'
       required: true
       default: 'azure-vote-front'
-#env:
- # CLUSTER_NAME: mongo1
-  #CLUSTER_RESOURCE_GROUP: mongo-aks
-  #NAMESPACE: default
-  #REPO: mongoacr
+
+env:
+ CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
+ CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
   
 jobs:
     Azure-login:
