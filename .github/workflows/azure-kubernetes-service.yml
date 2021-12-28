@@ -87,8 +87,8 @@ jobs:
            #name: deploy build
            runs-on: ubuntu-latest
            steps:
-            - uses: actions/checkout@master
-           # - name: deploy build
+            #- uses: actions/checkout@master
+            - name: deploy build
               #run: |
               env:
                CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
