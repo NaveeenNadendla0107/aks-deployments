@@ -86,7 +86,7 @@ jobs:
            runs-on: ubuntu-latest
            steps:
              - uses:  azure/login@v1
-             #- name: deploy
+             - name: login-azure
                with:
                 creds: ${{ secrets.AZURE_CREDENTIALS }}
             # deploy   
