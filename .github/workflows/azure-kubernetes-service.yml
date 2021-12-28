@@ -86,27 +86,14 @@ jobs:
            runs-on: ubuntu-latest
            steps:
              - uses:  azure/login@v1
+             #- name: deploy
                with:
                 creds: ${{ secrets.AZURE_CREDENTIALS }}
-             - name: "Set the target AKS cluster"
-               uses: Azure/aks-set-context@v1
-               with:
-                creds: '${{ secrets.AZURE_CREDENTIALS }}'
-                cluster-name: ${{ github.event.inputs.ClusterName }}
-                resource-group: ${{ github.event.inputs.resourceGroup }}
-
-             - name: "Create container registry image pull secret"
-               uses: Azure/k8s-create-secret@v1
-               with:
-                container-registry-url: ${{ secrets.REGISTRY_URL }}
-                container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
-                container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-                secret-name: acr-secret
             # deploy   
              - name: deploy
-               #env:
-                #CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
-                #CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
+               env:
+                CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
+                CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
                run: |
                  az aks get-credentials \
                  --resource-group ${{ github.event.inputs.resourceGroup }} \
@@ -114,5 +101,3 @@ jobs:
                  --overwrite-existing
                  helm upgrade -i ${{ github.event.inputs.appname }} ${{ github.event.inputs.helmchartname }}/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=latest --wait
                  kubectl get services -o wide
-                 imagepullsecrets: |
-                 acr-secret
