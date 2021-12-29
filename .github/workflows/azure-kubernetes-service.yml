@@ -61,6 +61,12 @@ jobs:
          uses: azure/login@v1
          with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+       - uses: Azure/get-keyvault-secrets@v1
+         with:
+          keyvault: "keytest77"
+          secrets: 'keyvaultname'
+          #id: myGetSecretAction
+
        # Install build
        - name: build
          run: |
