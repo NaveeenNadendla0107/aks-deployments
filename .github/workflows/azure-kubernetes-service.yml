@@ -27,10 +27,10 @@ on:
       required: true
       default: 'vote-app'
     
-     helmchartname:
+     helmchartrepository:
       description: 'helmchartname'
       required: true
-      default: 'azure-vote-front'
+      default: 'https://github.com/NaveeenNadendla0107/remote-helm-charts/tree/main/azure-vote-front'
    
      tag:
       description: 'image tag name'
@@ -61,16 +61,16 @@ jobs:
          uses: azure/login@v1
          with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-       - uses: Azure/get-keyvault-secrets@v1
-         with:
-          keyvault: "keytest77"
-          secrets: 'keyvaultname'
-          id: myGetSecretAction
+      # - uses: Azure/get-keyvault-secrets@v1
+       #  with:
+        #  keyvault: "keytest77"
+         # secrets: 'keyvaultname'
+          #id: myGetSecretAction
           
-       - uses: azure/docker-login@v1
-         with:
-          login-server: acr17.azurecr.io
-          password: ${{ steps.myGetSecretAction.outputs.keyvaultname }}
+       #- uses: azure/docker-login@v1
+        # with:
+         # login-server: acr17.azurecr.io
+          #password: ${{ steps.myGetSecretAction.outputs.keyvaultname }}
 
        # Install build
        - name: build
