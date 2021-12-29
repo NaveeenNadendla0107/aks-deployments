@@ -138,6 +138,6 @@ jobs:
                 
                  #helm upgrade -i ${{ github.event.inputs.appname }} ${{ github.event.inputs.helmchartname }}/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=${{ github.event.inputs.tag}} --wait
                  #kubectl get services -o wide
-                 helm pull https://github.com/NaveeenNadendla0107/remote-helm-charts/tree/main/azure-vote-front
+                 #helm pull https://github.com/NaveeenNadendla0107/remote-helm-charts/tree/main/azure-vote-front
                  helm pull -i ${{ github.event.inputs.appname }} https://github.com/NaveeenNadendla0107/remote-helm-charts/tree/main/azure-vote-front/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=${{ github.event.inputs.tag}} --wait
                  k#ubectl get services -o wide
