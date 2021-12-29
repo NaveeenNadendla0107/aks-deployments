@@ -40,21 +40,18 @@ on:
         description: 'keyvault Name'
         required: true
         default: 'testkey0107'
-     secrets:
-        description: 'keyvault Secret'
-        required: true
-        default: 'mykeyvaultpassword'
+     
      id: 
       description: 'Keyvault action ID'
       required: true
-      default: 'mykeyvaultpassword'
+      default: 'keyvaultaction'
       
       
 
 env:
  CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
  CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
- username: test
+
  
   
 jobs:
@@ -80,14 +77,14 @@ jobs:
        - uses: Azure/get-keyvault-secrets@v1
          with:
           keyvault: ${{ github.event.inputs.keyvault }}
-          secrets: ${{ github.event.inputs.secrets }}
+          secrets: 'password, username'
           id: ${{ github.event.inputs.id }}
           
        - uses: azure/docker-login@v1
          with:
-          keyvault: ${{ github.event.inputs.keyvault }}
-          secrets: ${{ github.event.inputs.secrets }}
-          id: ${{ github.event.inputs.id }}
+          login-server: acr17.azurecr.io
+          username: ${{ steps.keyvaultaction.outputs.username }}
+          password: ${{ steps.keyvaultaction.password }}
 
 
 
