@@ -40,6 +40,11 @@ on:
         description: 'keyvault Name'
         required: true
         default: 'testkey0107'
+        
+     secrets:
+      description: 'secret vault name'
+      required: true
+      default: 'secret'   
      
      id: 
       description: 'Keyvault action ID'
@@ -77,7 +82,7 @@ jobs:
        - uses: Azure/get-keyvault-secrets@v1
          with:
           keyvault: ${{ github.event.inputs.keyvault }}
-          secrets: 'username, password'
+          secrets: 'secretkey'
           id: ${{ github.event.inputs.id }}
           
       # - uses: azure/docker-login@v1
