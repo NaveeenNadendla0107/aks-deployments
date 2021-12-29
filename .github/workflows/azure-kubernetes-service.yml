@@ -82,7 +82,7 @@ jobs:
        - uses: Azure/get-keyvault-secrets@v1
          with:
           keyvault: ${{ github.event.inputs.keyvault }}
-          secrets: 'secretkey'
+          secrets: ${{ github.event.inputs.secrets }}
           id: ${{ github.event.inputs.id }}
           
       # - uses: azure/docker-login@v1
