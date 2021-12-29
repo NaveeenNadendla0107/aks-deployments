@@ -140,4 +140,4 @@ jobs:
                  #kubectl get services -o wide
                   helm pull https://github.com/NaveeenNadendla0107/remote-helm-charts/blob/main/azure-vote-front/azure-vote-front.zip
                  # helm upgrade -i ${{ github.event.inputs.appname }} https://github.com/NaveeenNadendla0107/remote-helm-charts/tree/main/azure-vote-front/azure-vote-front.tar/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=${{ github.event.inputs.tag}} --wait
-                  #kubectl get services -o wide
+                  kubectl get services -o wide
