@@ -80,11 +80,11 @@ jobs:
           secrets: 'username, password'
           id: ${{ github.event.inputs.id }}
           
-       - uses: azure/docker-login@v1
-         with:
+      # - uses: azure/docker-login@v1
+        # with:
           #login-server: mycontainer.azurecr.io
-          username: ${{ steps.keyvaultaction.outputs.username }}
-          password: ${{ steps.keyvaultaction.outputs.password }}
+         # username: ${{ steps.keyvaultaction.outputs.username }}
+          #password: ${{ steps.keyvaultaction.outputs.password }}
 
        # Install build
        - name: build
