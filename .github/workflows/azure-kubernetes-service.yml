@@ -61,16 +61,17 @@ jobs:
          uses: azure/login@v1
          with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      # - uses: Azure/get-keyvault-secrets@v1
-       #  with:
-        #  keyvault: "keytest77"
-         # secrets: 'keyvaultname'
-          #id: myGetSecretAction
+       - uses: Azure/get-keyvault-secrets@v1
+         with:
+          keyvault: "keytest77"
+          secrets: 'keyvaultname'
+          id: keyvaultaction
           
-       #- uses: azure/docker-login@v1
-        # with:
-         # login-server: acr17.azurecr.io
-          #password: ${{ steps.myGetSecretAction.outputs.keyvaultname }}
+       - uses: azure/docker-login@v1
+         with:
+           creds: ${{ steps.keyvaultaction.outputs.keyvaultname}}
+
+
 
        # Install build
        - name: build
