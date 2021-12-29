@@ -82,7 +82,7 @@ jobs:
           
        - uses: azure/docker-login@v1
          with:
-          login-server: mycontainer.azurecr.io
+          #login-server: mycontainer.azurecr.io
           username: ${{ steps.keyvaultaction.outputs.username }}
           password: ${{ steps.keyvaultaction.outputs.password }}
 
