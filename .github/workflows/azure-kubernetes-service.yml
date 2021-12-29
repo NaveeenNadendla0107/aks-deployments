@@ -85,9 +85,9 @@ jobs:
           
        - uses: azure/docker-login@v1
          with:
-          login-server: acr17.azurecr.io
-          username: ${{ steps.keyvaultaction.outputs.test}}
-          password: ${{ steps.keyvaultaction.outputs.mykeyvaultpassword }}
+          keyvault: ${{ github.event.inputs.keyvault }}
+          secrets: ${{ github.event.inputs.secrets }}
+          id: ${{ github.event.inputs.id }}
 
 
 
