@@ -81,11 +81,12 @@ jobs:
           secrets: ${{ github.event.inputs.secrets }}
           id: ${{ github.event.inputs.id }}
           
-     #  - uses: azure/docker-login@v1
-      #   with:
-       #   #login-server: acr17.azurecr.io
-        #  username: ${{ steps.keyvaultaction.outputs.mykeyvaultusername}}
-         # password: ${{ steps.keyvaultaction.outputs.mykeyvaultpassword}}
+       - uses: azure/docker-login@v1
+         with:
+          login-server: acr17.azurecr.io
+          username: ${{ steps.keyvaultaction.outputs.mykeyvaultusername }}
+          password: ${{ steps.keyvaultaction.outputs.mykeyvaultpassword }}
+
 
 
 
