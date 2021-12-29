@@ -64,13 +64,14 @@ jobs:
        - uses: Azure/get-keyvault-secrets@v1
          with:
           keyvault: "testkey0107"
-          secrets: 'mykeyvault'
+          secrets: 'mykeyvault, mykeyvaultpassword'
           id: keyvaultaction
           
        - uses: azure/docker-login@v1
          with:
           login-server: acr17.azurecr.io
-          creds: ${{ steps.keyvaultaction.outputs.mykeyvault}}
+          username: ${{ steps.keyvaultaction.outputs.mykeyvault}}
+          password: ${{ steps.keyvaultaction.outputs.mykeyvaultpassword}}
 
 
 
