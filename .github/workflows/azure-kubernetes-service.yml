@@ -65,7 +65,12 @@ jobs:
          with:
           keyvault: "keytest77"
           secrets: 'keyvaultname'
-          #id: myGetSecretAction
+          id: myGetSecretAction
+          
+       - uses: azure/docker-login@v1
+         with:
+          login-server: acr17.azurecr.io
+          password: ${{ steps.myGetSecretAction.outputs.keyvaultname }}
 
        # Install build
        - name: build
