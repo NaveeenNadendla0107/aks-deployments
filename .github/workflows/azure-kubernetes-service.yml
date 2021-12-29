@@ -44,7 +44,7 @@ on:
      secrets:
       description: 'secret vault name'
       required: true
-      default: 'secret'   
+      default: 'secretkey'   
      
      id: 
       description: 'Keyvault action ID'
