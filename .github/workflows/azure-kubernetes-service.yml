@@ -138,6 +138,7 @@ jobs:
                 
                  #helm upgrade -i ${{ github.event.inputs.appname }} ${{ github.event.inputs.helmchartname }}/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=${{ github.event.inputs.tag}} --wait
                  #kubectl get services -o wide
-                 helm pull https://github.com/NaveeenNadendla0107/remote-helm-charts/blob/main/azure-vote-front/azure-vote-front.zip ${{ https://github.com/NaveeenNadendla0107/aks-deployments/blob/master/azure-vote/azure-vote.zip }}/ image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} set image.tag=${{ github.event.inputs.tag}}
+                 helm pull https://github.com/NaveeenNadendla0107/remote-helm-charts/blob/main/azure-vote-front/azure-vote-front.zip
+                 helm pull https://github.com/NaveeenNadendla0107/aks-deployments/blob/master/azure-vote/azure-vote.zip
                  #helm upgrade -i ${{ github.event.inputs.appname }} ${{ github.event.inputs.helmchartname }}/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=${{ github.event.inputs.tag}} --wait
                  kubectl get services -o wide
