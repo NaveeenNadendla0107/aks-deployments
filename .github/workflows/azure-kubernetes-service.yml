@@ -27,10 +27,10 @@ on:
       required: true
       default: 'vote-app'
     
-     #helmchartnamerepo:
-      #description: 'helmchartname'
-      #required: true
-      #default: 'azure-vote-front'
+     helmchartnamerepo:
+      description: 'helmchartname'
+      required: true
+      default: 'azure-vote-front'
    
      tag:
       description: 'image tag name'
