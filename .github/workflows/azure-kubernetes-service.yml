@@ -1,8 +1,9 @@
 name: Aks deploy
 on:
  push: 
-   tags: 
-     - 'v*'
+   tags: ['v[0-9].[0-9]+.[0-9]+']
+   branches: master
+   
  workflow_dispatch:
    inputs:
      image:
