@@ -1,5 +1,8 @@
 name: Aks deploy
 on:
+ push: 
+   tags: 
+     - 'v*'
  workflow_dispatch:
    inputs:
      image:
