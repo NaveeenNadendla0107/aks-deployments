@@ -60,23 +60,6 @@ on:
  
   
 jobs:
-
-# Trigger the create release workflow
-on:
-  push:
-    tags:
-      - 'v*'
-
-jobs:
-  release:
-    name: Create Release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
     #Azure-login:
       #name: Azure Login
      # runs-on: ubuntu-latest
