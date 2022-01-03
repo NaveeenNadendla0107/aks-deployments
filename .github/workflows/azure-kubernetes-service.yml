@@ -143,13 +143,5 @@ jobs:
                 
                  helm upgrade -i ${{ github.event.inputs.appname }} ${{ github.event.inputs.helmchartname }}/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=${{ github.event.inputs.tag}} --wait
                  kubectl get services -o wide
-    publish:
-     runs-on: ubuntu-latest
-     steps:
-      # Release with semantic tag like v1.0.3
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.release.tag_name }}
-
+   
 
