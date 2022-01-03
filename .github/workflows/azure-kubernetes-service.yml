@@ -64,15 +64,7 @@ on:
  
   
 jobs:
-    publish:
-     runs-on: ubuntu-latest
-     steps:
-      # Release with semantic tag like v1.0.3
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.release.tag_name }}
-    #Azure-login:
+     #Azure-login:
       #name: Azure Login
      # runs-on: ubuntu-latest
       #steps:
