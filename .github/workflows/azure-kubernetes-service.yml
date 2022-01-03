@@ -1,6 +1,8 @@
 name: Aks deploy
 on:
  push: 
+   branches:
+     - master
    tags: 
      - 'v*'   
    
