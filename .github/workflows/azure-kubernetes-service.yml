@@ -1,8 +1,7 @@
 name: Aks deploy
 on:
  push: 
-   tags: 
-     - 'v*'
+   branches: [sree2]
    
      
       
