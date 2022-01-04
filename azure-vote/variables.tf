@@ -1,13 +1,13 @@
 inputs:
      image:
-      description: image
+      description: 'image'
       required: true
-      default: deploy-vote-second
+      default: 'deploy-vote-second'
      
      containerregistry:
       description: 'containerregistry'
       required: true
-      default: acr17
+      default: 'acr17'
       
      ClusterName:
       description: 'clusterName'
@@ -43,7 +43,7 @@ inputs:
       required: true
       default: 'secretkey'   
      
-  #   id: 
-  #    description: 'Keyvault action ID'
-  #    required: true
-  #    default: 'keyvaultaction'
+     Keyvaultid: 
+      description: 'Keyvault action ID'
+      required: true
+      default: 'keyvaultaction'
