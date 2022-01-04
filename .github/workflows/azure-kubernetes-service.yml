@@ -9,7 +9,7 @@ on:
      image:
       description: image
       required: true
-      default: deploy-vote-second
+      default: deploy-third
      
      containerregistry:
       description: 'containerregistry'
