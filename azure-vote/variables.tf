@@ -33,17 +33,17 @@ inputs:
       description: 'image tag name'
       required: true
       default: 'latest'
-     keyvault:
-        description: 'keyvault Name'
-        required: true
-        default: 'testkey0107'
+  #   keyvault:
+  #      description: 'keyvault Name'
+  #      required: true
+  #      default: 'testkey0107'
         
-     secrets:
-      description: 'secret vault name'
-      required: true
-      default: 'secretkey'   
+  #   secrets:
+  #    description: 'secret vault name'
+  #    required: true
+  #    default: 'secretkey'   
      
-     id: 
-      description: 'Keyvault action ID'
-      required: true
-      default: 'keyvaultaction'
+  #   id: 
+  #    description: 'Keyvault action ID'
+  #    required: true
+  #    default: 'keyvaultaction'
