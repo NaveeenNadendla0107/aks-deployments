@@ -113,7 +113,7 @@ jobs:
      
     
          #- name: deploy
-      #env:
+      #env:v
        # CLUSTER_RESOURCE_GROUP_NAME: ${{ github.event.inputs.resourceGroup }}
        # CLUSTER_NAME: ${{ github.event.inputs.ClusterName }}
        # run: |
