@@ -5,7 +5,8 @@ description: A Helm chart for Kubernetes
 dependencies:
   - name: redis
     version: 14.7.1
-    repository: git@github.com:NaveeenNadendla0107/helm-chart.git
+    repository: https://github.com/NaveeenNadendla0107/helm-chart.git
+#    repository: git@github.com:NaveeenNadendla0107/helm-chart.git
 #    repository: https://charts.bitnami.com/bitnami
 
 #
