@@ -5,7 +5,8 @@ description: A Helm chart for Kubernetes
 dependencies:
   - name: redis
     version: 14.7.1
-    repository: https://charts.bitnami.com/bitnami
+    repository: git@github.com:NaveeenNadendla0107/helm-chart.git
+#    repository: https://charts.bitnami.com/bitnami
 
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
