@@ -109,8 +109,9 @@ jobs:
             - uses: actions/checkout@master
            # - name: Helm install
             - run: |
-               curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-     
+               curl https://github.com/NaveeenNadendla0107/helm-chart.git 
+     #          curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      #         curl https://github.com/NaveeenNadendla0107/helm-chart.git 
     
          #- name: deploy
       #env:v
