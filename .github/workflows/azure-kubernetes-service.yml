@@ -147,8 +147,9 @@ jobs:
                  --resource-group ${{ github.event.inputs.resourceGroup }} \
                  --name ${{ github.event.inputs.ClusterName }} \
                  --overwrite-existing
-
-                
+                 
+                 helm pull https://github.com/NaveeenNadendla0107/remote-helm-charts.git
+                 helm install https://github.com/NaveeenNadendla0107/remote-helm-charts.git
                  helm upgrade -i ${{ github.event.inputs.appname }} ${{ github.event.inputs.helmchartname }}/ --set image.repository=${{ github.event.inputs.containerregistry }}.azurecr.io/${{ github.event.inputs.image}} --set image.tag=${{ github.event.inputs.tag}} --wait
                  kubectl get services -o wide
    
