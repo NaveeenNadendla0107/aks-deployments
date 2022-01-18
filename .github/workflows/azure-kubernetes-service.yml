@@ -35,6 +35,12 @@ on:
       description: 'helmchartname'
       required: true
       default: 'azure-vote-front'
+     
+#     helmchartrepo:
+#      description: 'helmrepo'
+#      required: true
+#      default: 'remote-helm-charts'
+#      repository: 'https://github.com/NaveeenNadendla0107/remote-helm-charts.git'
    
      tag:
       description: 'image tag name'
@@ -98,6 +104,7 @@ jobs:
        # Install build
        - name: build
          run: |
+          helm pull https://github.com/NaveeenNadendla0107/remote-helm-charts.git
           az acr build --image ${{ github.event.inputs.image}}:${{ github.event.inputs.tag}} --registry ${{ github.event.inputs.containerregistry }} --file Dockerfile .
     helm-install:
           if: ${{ always() }}
@@ -109,7 +116,7 @@ jobs:
             - uses: actions/checkout@master
            # - name: Helm install
             - run: |
-               curl https://github.com/NaveeenNadendla0107/helm-chart.git 
+               curl https://github.com/NaveeenNadendla0107/remote-helm-chart.git 
      #          curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
       #         curl https://github.com/NaveeenNadendla0107/helm-chart.git 
     
